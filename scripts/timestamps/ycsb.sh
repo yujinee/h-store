@@ -89,7 +89,7 @@ for skew in 0.8 1.01 1.1 1.2; do
             "-Dclient.output_memory=${OUTPUT_PREFIX}-memory.csv" \
        
             #### Transacion Rate ####
-            "-Dclient.weights=\"ReadRecord:50,InsertRecord:50,*:0\"" \
+            "-Dclient.weights=\"ReadRecord:50,UpdateRecord:50,*:0\"" \
 
             # Anti-Caching Experiments
         "-Dsite.anticache_enable=${ENABLE_ANTICACHE}" \
@@ -101,8 +101,8 @@ for skew in 0.8 1.01 1.1 1.2; do
             "-Dsite.anticache_reset=false" \
             "-Dsite.anticache_block_size=${ANTICACHE_BLOCK_SIZE}" \
             "-Dsite.anticache_check_interval=10000" \
-            "-Dsite.anticache_threshold_mb=500" \
-            "-Dsite.anticache_blocks_per_eviction=200" \
+            "-Dsite.anticache_threshold_mb=200" \
+            "-Dsite.anticache_blocks_per_eviction=100" \
             "-Dsite.anticache_max_evicted_blocks=1000000" \
             #    "-Dsite.anticache_evict_size=${ANTICACHE_EVICT_SIZE}" \
             "-Dsite.anticache_threshold=${ANTICACHE_THRESHOLD}" \

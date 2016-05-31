@@ -73,7 +73,8 @@ for round in 1 2 3; do
     # Client Params
   "-Dclient.scalefactor=1" \
     "-Dclient.memory=2048" \
-    "-Dclient.txnrate=1562" \
+   # "-Dclient.txnrate=1562" \
+    "-Dclient.txnrate=10000" \
     "-Dclient.warmup=30000" \
     "-Dclient.duration=300000" \
     "-Dclient.shared_connection=false" \
@@ -87,9 +88,9 @@ for round in 1 2 3; do
   "-Dsite.anticache_enable=${ENABLE_ANTICACHE}" \
     "-Dsite.anticache_block_size=${ANTICACHE_BLOCK_SIZE}" \
   "-Dsite.anticache_dir=anti/tpcc" \
-  "-Dsite.anticache_check_interval=20000" \
+  "-Dsite.anticache_check_interval=10000" \
     "-Dsite.anticache_threshold_mb=500" \
-    "-Dsite.anticache_blocks_per_eviction=50" \
+    "-Dsite.anticache_blocks_per_eviction=100" \
     "-Dsite.anticache_max_evicted_blocks=100000" \
     #"-Dsite.anticache_evict_size=${ANTICACHE_EVICT_SIZE}" \
     "-Dsite.anticache_threshold=${ANTICACHE_THRESHOLD}" \
@@ -97,7 +98,7 @@ for round in 1 2 3; do
 
     # PROPORTIONAL or even ? 
 
-    "-Dclient.interval=5000" \
+    "-Dclient.interval=1000" \
     "-Dclient.anticache_enable=false" \
     "-Dclient.anticache_evict_interval=10000" \
     "-Dclient.anticache_evict_size=4194304" \
