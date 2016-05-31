@@ -28,8 +28,8 @@ BASE_CLIENT_THREADS=1
 BASE_SITE_MEMORY=4096
 BASE_SITE_MEMORY_PER_PARTITION=1024
 BASE_PROJECT="ycsb"
-BASE_DIR='anti'
-OUTPUT_DIR="~/data/ycsb/read-heavy/2/80-20"
+#BASE_DIR='anti'
+#OUTPUT_DIR="~/data/ycsb/read-heavy/2/80-20"
 
 for skew in 0.8 1.01 1.1 1.2; do
     for round in 1 2 3; do
@@ -45,7 +45,7 @@ for skew in 0.8 1.01 1.1 1.2; do
         BASE_ARGS=( \
             # SITE DEBUG
         "-Dsite.status_enable=false" \
-            "-Dsite.status_interval=10000" \
+            "-Dsite.status_interval=1000" \
             #    "-Dsite.status_exec_info=true" \
             #    "-Dsite.status_check_for_zombies=true" \
             #    "-Dsite.exec_profiling=true" \
@@ -68,7 +68,7 @@ for skew in 0.8 1.01 1.1 1.2; do
             "-Dsite.exec_postprocessing_threads=false" \
             "-Dsite.anticache_eviction_distribution=even" \
             "-Dsite.log_dir=$LOG_PREFIX" \
-            "-Dsite.specexec_enable=false"
+            "-Dsite.specexec_enable=false" \
 
         #    "-Dsite.queue_allow_decrease=true" \
             #    "-Dsite.queue_allow_increase=true" \
@@ -87,12 +87,15 @@ for skew in 0.8 1.01 1.1 1.2; do
             "-Dclient.throttle_backoff=100" \
             "-Dclient.output_anticache_evictions=${OUTPUT_PREFIX}-evictions.csv" \
             "-Dclient.output_memory=${OUTPUT_PREFIX}-memory.csv" \
-            "-Dclient.weights=\"ReadRecord:50,UpdateRecord:50,*:0\""
+       
+            #### Transacion Rate ####
+            "-Dclient.weights=\"ReadRecord:50,InsertRecord:50,*:0\"" \
 
             # Anti-Caching Experiments
         "-Dsite.anticache_enable=${ENABLE_ANTICACHE}" \
             "-Dsite.anticache_timestamps=${ENABLE_TIMESTAMPS}" \
-            "-Dsite.anticache_batching=true" \
+#            "-Dsite.anticache_batching=true" \
+#             why batch ?? 
             "-Dsite.anticache_dir=anti/ycsb" \
             "-Dsite.anticache_profiling=true" \
             "-Dsite.anticache_reset=false" \
@@ -182,7 +185,7 @@ for skew in 0.8 1.01 1.1 1.2; do
         ant hstore-benchmark ${BASE_ARGS[@]} \
             -Dproject=${BASE_PROJECT} \
             -Dkillonzero=false \
-            -Dclient.threads_per_host=4 \
+            -Dclient.threads_per_host=${NUM_CLIENTS} \
             -Dsite.memory=${SITE_MEMORY} \
             -Dclient.hosts=${CLIENT_HOSTS_STR} \
             -Dclient.count=${CLIENT_COUNT}
