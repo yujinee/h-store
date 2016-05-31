@@ -13,26 +13,22 @@ exit $exit_status
 
 ENABLE_ANTICACHE=true
 
-SITE_HOST="dev3.db.pdl.cmu.local"
+SITE_HOST="localhost"
 
 CLIENT_HOSTS=( \
-    #"localhost" \
-    #"localhost" \
-    #"localhost" \
-    #"localhost" \
-    "dev1.db.pdl.cmu.local" \
-    "dev1.db.pdl.cmu.local" \
-    "dev1.db.pdl.cmu.local" \
-    "dev1.db.pdl.cmu.local" \
+    "localhost" \
+    "localhost" \
+    "localhost" \
+    "localhost" \
     )
 
 BASE_CLIENT_THREADS=1
 #BASE_SITE_MEMORY=8192
 #BASE_SITE_MEMORY_PER_PARTITION=1024
-BASE_SITE_MEMORY=8192
+BASE_SITE_MEMORY=4096
 BASE_SITE_MEMORY_PER_PARTITION=1024
 BASE_PROJECT="ycsb"
-BASE_DIR=`pwd`
+BASE_DIR='anti'
 OUTPUT_DIR="~/data/ycsb/read-heavy/2/80-20"
 
 for skew in 0.8 1.01 1.1 1.2; do
@@ -79,10 +75,10 @@ for skew in 0.8 1.01 1.1 1.2; do
             #    "-Dsite.queue_threshold_factor=0.5" \
 
             # Client Params
-        "-Dclient.scalefactor=10" \
+        "-Dclient.scalefactor=8" \
             "-Dclient.memory=2048" \
             "-Dclient.txnrate=3500" \
-            "-Dclient.warmup=120000" \
+            "-Dclient.warmup=30000" \
             "-Dclient.duration=300000" \
             "-Dclient.interval=5000" \
             "-Dclient.shared_connection=false" \
@@ -97,6 +93,7 @@ for skew in 0.8 1.01 1.1 1.2; do
         "-Dsite.anticache_enable=${ENABLE_ANTICACHE}" \
             "-Dsite.anticache_timestamps=${ENABLE_TIMESTAMPS}" \
             "-Dsite.anticache_batching=true" \
+            "-Dsite.anticache_dir=anti/ycsb" \
             "-Dsite.anticache_profiling=true" \
             "-Dsite.anticache_reset=false" \
             "-Dsite.anticache_block_size=${ANTICACHE_BLOCK_SIZE}" \
@@ -151,9 +148,9 @@ for skew in 0.8 1.01 1.1 1.2; do
         wait
 
         ant compile
-        HSTORE_HOSTS="${SITE_HOST}:0:0-7"
-        NUM_CLIENTS=`expr 8 \* $BASE_CLIENT_THREADS`
-        SITE_MEMORY=`expr $BASE_SITE_MEMORY + \( 8 \* $BASE_SITE_MEMORY_PER_PARTITION \)`
+        HSTORE_HOSTS="${SITE_HOST}:0:0-3"
+        NUM_CLIENTS=`expr 4 \* $BASE_CLIENT_THREADS`
+        SITE_MEMORY=`expr $BASE_SITE_MEMORY + \( 4 \* $BASE_SITE_MEMORY_PER_PARTITION \)`
 
         # BUILD PROJECT JAR
         ant hstore-prepare \
@@ -174,11 +171,11 @@ for skew in 0.8 1.01 1.1 1.2; do
         done
 
         # DISTRIBUTE PROJECT JAR
-        for HOST in ${HOSTS_TO_UPDATE[@]}; do
-            if [ "$HOST" != $(hostname) ]; then
-                scp -r ${BASE_PROJECT}.jar ${HOST}:${BASE_DIR} &
-            fi
-        done
+#        for HOST in ${HOSTS_TO_UPDATE[@]}; do
+#            if [ "$HOST" != $(hostname) ]; then
+#                scp -r ${BASE_PROJECT}.jar ${HOST}:${BASE_DIR} &
+#            fi
+#        done
         wait
 
         # EXECUTE BENCHMARK
