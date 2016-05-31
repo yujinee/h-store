@@ -84,17 +84,25 @@ namespace voltdb {
  |  flags (1 byte)  |  time stamp (4 bytes) | tuple data  |
  ----------------------------------------------------------
 
+ (e). Anti-Caching with timestamps and frequency
+ -----------------------------------------------------------------------------------
+ |  flags (1 byte)  |  frequency (4 bytes)  |  time stamp (4 bytes)  | tuple data  |
+ -----------------------------------------------------------------------------------
  */
 
 #ifdef ANTICACHE
     #ifdef ANTICACHE_TIMESTAMPS
     	#define TUPLE_HEADER_SIZE 5
     #else
-    	#ifdef ANTICACHE_REVERSIBLE_LRU
-        	#define TUPLE_HEADER_SIZE 9
-    	#else
+      #ifdef ANTICACHE_FREQUENCY
+        #define TUPLE_HEADER_SIZE 9
+      #else
+      	#ifdef ANTICACHE_REVERSIBLE_LRU
+         	#define TUPLE_HEADER_SIZE 9
+    	  #else
         	#define TUPLE_HEADER_SIZE 5
-    	#endif
+    	  #endif
+      #endif
     #endif
 #else
     #define TUPLE_HEADER_SIZE 1

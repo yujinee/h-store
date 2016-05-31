@@ -813,7 +813,15 @@ public final class HStoreConf {
             experimental=true
         )
         public boolean anticache_timestamps_prime;
-        
+
+        @ConfigProperty(
+            description="Enable the anti-cache timestamps with FREQUENCY feature. This requires that the system " +
+            		    "is compiled with ${site.anticache_enable} set to true.",
+            defaultBoolean=false,
+            experimental=true
+        )
+        public boolean anticache_frequency;
+ 
         // ----------------------------------------------------------------------------
         // Storage MMAP Options
         // ----------------------------------------------------------------------------

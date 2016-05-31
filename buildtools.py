@@ -48,6 +48,7 @@ class BuildContext:
         self.ARIES= False
         self.ANTICACHE_COUNTER = False
         self.ANTICACHE_TIMESTAMPS = True
+        self.ANTICACHE_FREQUENCY = False
         self.ANTICACHE_TIMESTAMPS_PRIME = True
 
         for arg in [x.strip().upper() for x in args]:
@@ -100,6 +101,11 @@ class BuildContext:
                 parts = arg.split("=")
                 if len(parts) > 1 and not parts[1].startswith("${"):
                     self.ANTICACHE_TIMESTAMPS_PRIME = bool(parts[1])
+            if arg.startswith("ANTICACHE_FREQUENCY="):
+                parts = arg.split("=")
+                if len(parts) > 1 and not parts[1].startswith("${"):
+                    self.ANTICACHE_FREQUENCY = bool(parts[1])
+ 
                 
             if arg.startswith("LOG_LEVEL="):
                 parts = arg.split("=")
