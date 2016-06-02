@@ -32,6 +32,7 @@ obj
 conf-*.html
 .DS_Store
 SourceJars
+logs/
 
 ## -------------------------------
 ## JNI Compiler Artifacts
