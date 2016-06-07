@@ -40,7 +40,7 @@ for NUM_EVICT in 200 300; do
   for THRESHOLD in 1000 1500; do
     for INTERVAL in 7000 10000 15000 20000; do
       for round in 1 2; do
-        OUTPUT_PREFIX="logs/timestamp2/$round-tpcc-T${THRESHOLD}-E${NUM_EVICT}-I${INTERVAL}"
+        OUTPUT_PREFIX="logs/timestamp3/$round-tpcc-T${THRESHOLD}-E${NUM_EVICT}-I${INTERVAL}"
         echo $OUTPUT_PREFIX
         mkdir -p $OUTPUT_PREFIX
         BASE_ARGS=( \
@@ -93,7 +93,7 @@ for NUM_EVICT in 200 300; do
             # Anti-Caching Experiments
           "-Dsite.anticache_enable=${ENABLE_ANTICACHE}" \
             "-Dsite.anticache_block_size=${ANTICACHE_BLOCK_SIZE}" \
-            "-Dsite.anticache_dir=anti/tpcc" \
+            "-Dsite.anticache_dir=../../../media/SSD/anticache/tpcc" \
             "-Dsite.anticache_reset=true" \
             "-Dsite.anticache_check_interval=${INTERVAL}" \
             "-Dsite.anticache_threshold_mb=${THRESHOLD}" \
