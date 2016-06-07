@@ -92,17 +92,17 @@ namespace voltdb {
 
 #ifdef ANTICACHE
     #ifdef ANTICACHE_TIMESTAMPS
-    	#define TUPLE_HEADER_SIZE 5
-    #else
       #ifdef ANTICACHE_FREQUENCY
         #define TUPLE_HEADER_SIZE 9
       #else
+    	  #define TUPLE_HEADER_SIZE 5
+      #endif
+    #else
       	#ifdef ANTICACHE_REVERSIBLE_LRU
          	#define TUPLE_HEADER_SIZE 9
     	  #else
         	#define TUPLE_HEADER_SIZE 5
     	  #endif
-      #endif
     #endif
 #else
     #define TUPLE_HEADER_SIZE 1
@@ -357,7 +357,22 @@ public:
             uint32_t cold_time = 0;
             memcpy(m_data+TUPLE_HEADER_SIZE-4, &cold_time, 4);
         }
-#endif
+
+    #ifdef ANTICACHE_FREQUENCTY
+        inline uint32_t getFrequency(){
+          uint32_t freq = 0;
+          memcpy(&freq, m_data+TUPLE_HEADER_SIZE-8, 4);
+          return freq;
+        }
+
+        inline void setFrequency(){
+          uint32_t freq = 0;
+          memcpy(&freq, m_data+TUPLE_HEADER_SIZE-8, 4);
+          freq++;
+          memcpy(m_data+TUPLE_HEADER_SIZE-8, &freq, 4);
+        }
+    #endif
+  #endif
 #endif
 
         inline uint32_t getTupleID()

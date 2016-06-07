@@ -72,6 +72,26 @@ public:
         uint32_t m_timestamp;
         char *m_addr;
 
+       /* 
+        * sorted in ascending order
+        */ 
+    #ifdef ANTICACHE_FREQUENCY
+        uint32_t m_frequency;  
+
+        bool operator < (const EvictionTuple &b) const {
+          if(b.m_frequency == m_frequency){
+            return m_timestamp < b.m_timestamp;
+          }
+          return m_frequency < b.m_frequency;
+        }
+
+        void setTuple(uint32_t timestamp, uint32_t frequency, char* addr) {
+            m_frequency = frequency;
+            m_timestamp = timestamp;
+            m_addr = addr;
+        }
+   
+    #else
         bool operator < (const EvictionTuple &b) const {
             if (b.m_timestamp == m_timestamp)
                 return (long)m_addr < (long)b.m_addr;
@@ -82,6 +102,8 @@ public:
             m_timestamp = timestamp;
             m_addr = addr;
         }
+
+    #endif
     };
     
 private: 

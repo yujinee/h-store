@@ -162,7 +162,11 @@ void EvictionIterator::reserve(int64_t amount) {
                 current_tuple->move(addr);
 
                 if (current_tuple->isActive()) {
-                    candidates[m_size].setTuple(current_tuple->getTimeStamp(), addr);
+                    #ifdef ANTICACHE_FREQUENCY
+                        candidates[m_size].setTuple(current_tuple->getTimeStamp(), current_tuple->getFrequency(), addr);
+                    #else
+                        candidates[m_size].setTuple(current_tuple->getTimeStamp(), addr);
+                    #endif
                     m_size++;
                 }
 
@@ -186,7 +190,11 @@ void EvictionIterator::reserve(int64_t amount) {
                 if (!current_tuple->isActive() || current_tuple->isEvicted())
                     continue;
 
-                candidates[m_size].setTuple(current_tuple->getTimeStamp(), current_addr);
+                #ifdef ANTICACHE_FREQUENCY
+                    candidates[m_size].setTuple(current_tuple->getTimeStamp(), current_tuple->getFrequency(), addr);
+                #else
+                    candidates[m_size].setTuple(current_tuple->getTimeStamp(), addr);
+                #endif
                 m_size++;
             }
         }
@@ -209,7 +217,11 @@ void EvictionIterator::reserve(int64_t amount) {
             if (!current_tuple->isActive() || current_tuple->isEvicted())
                 continue;
 
-            candidates[m_size].setTuple(current_tuple->getTimeStamp(), addr);
+            #ifdef ANTICACHE_FREQUENCY
+                candidates[m_size].setTuple(current_tuple->getTimeStamp(), current_tuple->getFrequency(), addr);
+            #else
+                candidates[m_size].setTuple(current_tuple->getTimeStamp(), addr);
+            #endif
             m_size++;
         }
 #endif
@@ -230,8 +242,12 @@ void EvictionIterator::reserve(int64_t amount) {
                 }
 
                 VOLT_TRACE("Flip addr: %p\n", addr);
-
-                candidates[m_size].setTuple(current_tuple->getTimeStamp(), addr);
+                
+                #ifdef ANTICACHE_FREQUENCY
+                    candidates[m_size].setTuple(current_tuple->getTimeStamp(), current_tuple->getFrequency(), addr);
+                #else
+                    candidates[m_size].setTuple(current_tuple->getTimeStamp(), addr);
+                #endif
                 m_size++;
 
                 addr += tuple_size;

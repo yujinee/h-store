@@ -272,6 +272,9 @@ bool AntiCacheEvictionManager::updateTuple(PersistentTable* table, TableTuple* t
     // set timestamp to the hotest
     TableTuple update_tuple(tuple->address(), table->m_schema);
     update_tuple.setTimeStamp();
+#ifdef ANTICACHE_FREQUENCY
+    update_tuple.setFrequency();
+#endif
 #endif
         
     return true; 
