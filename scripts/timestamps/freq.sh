@@ -36,11 +36,13 @@ NUM_EVICT=100
 THRESHOLD=1000
 INTERVAL=10000
 
-for NUM_EVICT in 200 300; do
-  for THRESHOLD in 1000 1500; do
-    for INTERVAL in 7000 10000 15000 20000; do
-      for round in 1 2; do
-        OUTPUT_PREFIX="logs/timestamp3/$round-tpcc-T${THRESHOLD}-E${NUM_EVICT}-I${INTERVAL}"
+for THRESHOLD in 1000 1500; do
+  for NUM_EVICT in 200 250 300; do
+    for INTERVAL in 10000 12000 15000; do
+      for round in 1 2 3; do
+         sudo sh -c 'echo 3 > /proc/sys/vm/drop_caches'
+         cp /home/yujinee/h-store/scripts/timestamps/freq/buildtools.py /home/yujinee/h-store/
+        OUTPUT_PREFIX="logs/freq/T${THRESHOLD}-E${NUM_EVICT}-I${INTERVAL}-$round"
         echo $OUTPUT_PREFIX
         mkdir -p $OUTPUT_PREFIX
         BASE_ARGS=( \
@@ -158,6 +160,9 @@ for NUM_EVICT in 200 300; do
           wait
 
           ant compile
+
+          ant build
+
           for i in 8; do
             HSTORE_HOSTS="${SITE_HOST}:0:0-"`expr $i - 1`
             NUM_CLIENTS=`expr $i \* $BASE_CLIENT_THREADS`
@@ -192,7 +197,7 @@ for NUM_EVICT in 200 300; do
 
             # STATUS
 
-            iostat -xtc 1 > ${OUTPUT_PREFIX}/diskutil.txt &
+   #         iostat -xtc 1 > ${OUTPUT_PREFIX}/diskutil.txt &
 
             # EXECUTE BENCHMARK
             ant hstore-benchmark ${BASE_ARGS[@]} \
@@ -203,7 +208,7 @@ for NUM_EVICT in 200 300; do
               -Dclient.hosts=${CLIENT_HOSTS_STR} \
               -Dclient.count=${CLIENT_COUNT} | tee ${OUTPUT_PREFIX}/record.txt
 
-            sudo pkill iostat
+  #          sudo pkill iostat
 
 
             result=$?

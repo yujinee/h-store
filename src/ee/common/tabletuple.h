@@ -358,7 +358,7 @@ public:
             memcpy(m_data+TUPLE_HEADER_SIZE-4, &cold_time, 4);
         }
 
-    #ifdef ANTICACHE_FREQUENCTY
+    #ifdef ANTICACHE_FREQUENCY
         inline uint32_t getFrequency(){
           uint32_t freq = 0;
           memcpy(&freq, m_data+TUPLE_HEADER_SIZE-8, 4);

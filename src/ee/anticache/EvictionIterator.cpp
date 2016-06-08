@@ -79,6 +79,7 @@ void EvictionIterator::reserve(int64_t amount) {
     char* addr = NULL;
     PersistentTable* ptable = static_cast<PersistentTable*>(table);
     int tuple_size = ptable->m_schema->tupleLength() + TUPLE_HEADER_SIZE;
+    VOLT_ERROR("TUPLE_HEADER_SIZE: %d\n", TUPLE_HEADER_SIZE);
     int active_tuple = (int)ptable->activeTupleCount();
     int evict_num = 0;
     int64_t used_tuple = ptable->usedTupleCount();
