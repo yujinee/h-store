@@ -191,9 +191,9 @@ void EvictionIterator::reserve(int64_t amount) {
                     continue;
 
                 #ifdef ANTICACHE_FREQUENCY
-                    candidates[m_size].setTuple(current_tuple->getTimeStamp(), current_tuple->getFrequency(), addr);
+                    candidates[m_size].setTuple(current_tuple->getTimeStamp(), current_tuple->getFrequency(), current_addr);
                 #else
-                    candidates[m_size].setTuple(current_tuple->getTimeStamp(), addr);
+                    candidates[m_size].setTuple(current_tuple->getTimeStamp(), current_addr);
                 #endif
                 m_size++;
             }
