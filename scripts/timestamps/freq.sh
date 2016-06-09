@@ -131,6 +131,7 @@ for THRESHOLD in 1000 1500; do
             "orders" \
             "order_line" \
             "history" \
+            "new_order" \
             )
 
           EVICTABLES=""
