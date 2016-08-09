@@ -103,9 +103,26 @@ public:
     }
 
     bool setEntryToNewAddress(const TableTuple *tuple, const void* address, const void *oldAddress) {
+      VOLT_ERROR("yujinee : HashTreeMulti");
+/*
+      VOLT_ERROR("YUJINEE : %d", tuple->getTimeStamp());
+#ifdef ANTICACHE_FREQUENCY
+      VOLT_ERROR("YUJINEE : %d", tuple->getFrequency());
+#endif
+*/
+
+      VOLT_ERROR("YUJINEE : %p", address);
+      VOLT_ERROR("YUJINEE : %p", oldAddress);
+      VOLT_ERROR("YUJINEE : %d", tuple->tupleLength());
+
         m_tmp1.setFromTuple(tuple, column_indices_, m_keySchema);
         ++m_updates;
-
+/*
+      VOLT_ERROR("YUJINEE : %d", m_tmp1.getTimestamp());
+#ifdef ANTICACHE_FREQUENCY
+      VOLT_ERROR("YUJINEE : %d", m_tmp1.getFrequency());
+#endif
+*/
         //        int i = 0; 
         std::pair<MMIter,MMIter> key_iter;
         for (key_iter = m_entries->equal_range(m_tmp1);
@@ -124,10 +141,13 @@ public:
         }
 
         VOLT_INFO("Tuple not found."); 
+        VOLT_ERROR(" YUJINEE : Tuple not found."); 
 
         //key exists, but not this tuple
-        return false;
-        //        return true;
+        //
+        //yujinee
+        //return false;
+                return true;
     }
 
     bool checkForIndexChange(const TableTuple *lhs, const TableTuple *rhs) {

@@ -118,6 +118,7 @@ public:
     }
     
     bool setEntryToNewAddress(const TableTuple *tuple, const void* address, const void *oldAddress) {
+      VOLT_ERROR("yujinee : BTreeMulti");
         m_tmp1.setFromTuple(tuple, column_indices_, m_keySchema);
         ++m_updates; 
         
@@ -142,10 +143,11 @@ public:
         
         VOLT_INFO("Tuple not found.");
         
-//        return true; 
+        return true; 
         
         //key exists, but not this tuple
-        return false;
+        // yujinee return true;
+//        return false;
     }
 
     bool checkForIndexChange(const TableTuple *lhs, const TableTuple *rhs)

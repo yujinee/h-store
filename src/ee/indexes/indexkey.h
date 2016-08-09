@@ -258,6 +258,8 @@ public:
 
     inline void setFromTuple(const TableTuple *tuple, const int *indices, const TupleSchema *keySchema) {
         ::memset(data, 0, keySize * sizeof(uint64_t));
+
+        // VOLT_ERROR("YUJINEE : setFromTuple1");
         const int columnCount = keySchema->columnCount();
         int keyOffset = 0;
         int intraKeyOffset = static_cast<int>(sizeof(uint64_t) - 1);
@@ -381,6 +383,8 @@ public:
     }
 
     inline void setFromTuple(const TableTuple *tuple, const int *indices, const TupleSchema *keySchema) {
+
+       //  VOLT_ERROR("YUJINEE : setFromTuple2");
         TableTuple keyTuple(keySchema);
         keyTuple.moveNoHeader(reinterpret_cast<void*>(data));
         for (int i = 0; i < keySchema->columnCount(); i++) {
@@ -493,6 +497,8 @@ class TupleKey {
 
     // Set a key from a table-schema tuple.
     inline void setFromTuple(const TableTuple *tuple, const int *indices, const TupleSchema *keySchema) {
+
+         VOLT_ERROR("YUJINEE : setFromTuple3");
         assert(tuple);
         assert(indices);
         m_columnIndices = indices;

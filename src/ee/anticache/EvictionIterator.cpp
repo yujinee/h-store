@@ -79,7 +79,7 @@ void EvictionIterator::reserve(int64_t amount) {
     char* addr = NULL;
     PersistentTable* ptable = static_cast<PersistentTable*>(table);
     int tuple_size = ptable->m_schema->tupleLength() + TUPLE_HEADER_SIZE;
-    VOLT_ERROR("TUPLE_HEADER_SIZE: %d\n", TUPLE_HEADER_SIZE);
+    VOLT_ERROR("yujinee TUPLE_HEADER_SIZE: %d\n", TUPLE_HEADER_SIZE);
     int active_tuple = (int)ptable->activeTupleCount();
     int evict_num = 0;
     int64_t used_tuple = ptable->usedTupleCount();
@@ -255,8 +255,18 @@ void EvictionIterator::reserve(int64_t amount) {
             }
         }
     }
+    
     sort(candidates, candidates + m_size, less <EvictionTuple>());
-
+   /* 
+    VOLT_ERROR("yujinee candidate LIST size : %d", pick_num);
+    for(int i=0; i<pick_num; i++){
+      VOLT_ERROR("yujinee candidate ts : %d", candidates[i].m_timestamp);
+#ifdef ANTICACHE_FREQUENCY
+      VOLT_ERROR("yujinee candidate freq : %d", candidates[i].m_frequency);
+#endif
+    }
+    
+*/
     //VOLT_INFO("Size of eviction candidates: %lu %d %d\n", (long unsigned int)m_size, activeN, evictedN);
 }
 #endif

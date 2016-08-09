@@ -37,18 +37,18 @@ THRESHOLD=1000
 INTERVAL=10000
 
 
-
-cp /home/yujinee/h-store/scripts/timestamps/freq/buildtools.py /home/yujinee/h-store/
+cp /home/yujinee/h-store/scripts/timestamps/ts/buildtools.py /home/yujinee/h-store/
 ant compile
 ant clean
 ant build
+
 
 for THRESHOLD in 1000 1500; do
   for NUM_EVICT in 200 250 300; do
     for INTERVAL in 10000 12000 15000; do
       for round in 1 2 3; do
          sudo sh -c 'echo 3 > /proc/sys/vm/drop_caches'
-        OUTPUT_PREFIX="logs/freq/T${THRESHOLD}-E${NUM_EVICT}-I${INTERVAL}-$round"
+        OUTPUT_PREFIX="logs/ts/T${THRESHOLD}-E${NUM_EVICT}-I${INTERVAL}-$round"
         echo $OUTPUT_PREFIX
         mkdir -p $OUTPUT_PREFIX
         BASE_ARGS=( \
@@ -200,7 +200,7 @@ for THRESHOLD in 1000 1500; do
 
             # STATUS
 
-   #         iostat -xtc 1 > ${OUTPUT_PREFIX}/diskutil.txt &
+ #           iostat -xtc 1 > ${OUTPUT_PREFIX}/diskutil.txt &
 
             # EXECUTE BENCHMARK
             ant hstore-benchmark ${BASE_ARGS[@]} \
@@ -211,7 +211,7 @@ for THRESHOLD in 1000 1500; do
               -Dclient.hosts=${CLIENT_HOSTS_STR} \
               -Dclient.count=${CLIENT_COUNT} | tee ${OUTPUT_PREFIX}/record.txt
 
-  #          sudo pkill iostat
+#            sudo pkill iostat
 
 
             result=$?

@@ -571,7 +571,9 @@ bool AntiCacheEvictionManager::evictBlockToDisk(PersistentTable *table, const lo
     TableTuple tuple(table->m_schema);
     EvictionIterator evict_itr(table);
 #ifdef ANTICACHE_TIMESTAMPS
+    VOLT_ERROR("yujinee here1!!!");
     evict_itr.reserve((int64_t)block_size * num_blocks);
+    VOLT_ERROR("yujinee here2!!!");
 #endif
 
     for(int i = 0; i < num_blocks; i++)
@@ -888,10 +890,12 @@ bool AntiCacheEvictionManager::evictBlockToDiskInBatch(PersistentTable *table, P
     EvictionIterator evict_itr(table);
     VOLT_DEBUG("here2!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
 
+    VOLT_ERROR("yujinee here3!!!");
 #ifdef ANTICACHE_TIMESTAMPS
     // TODO: what should I do with this?
     evict_itr.reserve((int64_t)block_size * num_blocks / 2);
 #endif
+    VOLT_ERROR("yujinee here4!!!");
 
     for(int i = 0; i < num_blocks; i++)
     {
@@ -1738,7 +1742,9 @@ bool AntiCacheEvictionManager::mergeUnevictedTuples(PersistentTable *table) {
             int64_t bytes_unevicted = 0;
             int tuplesRead = 0;
             if(!table->mergeStrategy()) {
+                VOLT_ERROR("yujinee : unevictTuple1 START!");
                 int64_t current_unevicted = tableInBlock->unevictTuple(&in, merge_tuple_offset, merge_tuple_offset, (bool)table->mergeStrategy());
+                VOLT_ERROR("yujinee : unevictTuple1 END!");
                 bytes_unevicted += current_unevicted;
                 antiCacheDB->removeSingleTupleStats(_block_id, current_unevicted);
                 //printf("Add back: %u %u\n", ACID, _block_id);
@@ -1747,8 +1753,10 @@ bool AntiCacheEvictionManager::mergeUnevictedTuples(PersistentTable *table) {
                 {
                 // if we're using the tuple-merge strategy, only merge in a single tuple
 
+                VOLT_ERROR("yujinee : unevictTuple2 START!");
                 // NOTICE: As we handle the problem this way, the unevicted bytes from one block can not exceed MAXINT.
                 bytes_unevicted += tableInBlock->unevictTuple(&in, (int)bytes_unevicted, merge_tuple_offset, (bool)table->mergeStrategy());
+                VOLT_ERROR("yujinee : unevictTuple2 END!");
                 /*                // get a free tuple and increment the count of tuples current used
                                   voltdb::TableTuple * m_tmpTarget1 = tableInBlock->getTempTarget1();
                                   tableInBlock->nextFreeTuple(m_tmpTarget1);

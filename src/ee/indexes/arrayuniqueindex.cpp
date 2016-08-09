@@ -85,6 +85,7 @@ bool ArrayUniqueIndex::replaceEntry(const TableTuple *oldTupleValue, const Table
     
 bool ArrayUniqueIndex::setEntryToNewAddress(const TableTuple *tuple, const void* address, const void* oldAddress)
 {
+  VOLT_ERROR("yujinee : ArrayUniqueIndex");
     int32_t key = ValuePeeker::peekAsInteger(tuple->getNValue(column_indices_[0]));
     
     assert(key < ARRAY_INDEX_INITIAL_SIZE);
