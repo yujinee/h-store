@@ -494,7 +494,7 @@ int64_t PersistentTable::unevictTuple(ReferenceSerializeInput * in, int j, int m
     m_tmpTarget1.setDeletedFalse();
     // update the indexes to point to this newly unevicted tuple
     //VOLT_TRACE("BEFORE: tuple.isEvicted() = %d", m_tmpTarget1.isEvicted());
-    VOLT_ERROR("yujinee BEFORE: tuple.isEvicted() = %d", m_tmpTarget1.isEvicted());
+//    VOLT_ERROR("yujinee BEFORE: tuple.isEvicted() = %d", m_tmpTarget1.isEvicted());
     setEntryToNewAddressForAllIndexes(&m_tmpTarget1, m_tmpTarget1.address(), m_tmpTarget2.address());
     updateStringMemory((int)m_tmpTarget1.getNonInlinedMemorySize());
 
@@ -1011,8 +1011,8 @@ void PersistentTable::updateFromAllIndexes(TableTuple &targetTuple, const TableT
 
 void PersistentTable::setEntryToNewAddressForAllIndexes(const TableTuple *tuple, const void* address, const void* oldAddress) {
     for (int i = m_indexCount - 1; i >= 0; --i) {
-        VOLT_ERROR("yujinee Updating tuple address in index %s.%s [%s]",
-                   name().c_str(), m_indexes[i]->getName().c_str(), m_indexes[i]->getTypeName().c_str());
+//        VOLT_ERROR("yujinee Updating tuple address in index %s.%s [%s]",
+//                   name().c_str(), m_indexes[i]->getName().c_str(), m_indexes[i]->getTypeName().c_str());
         VOLT_TRACE("address is %p", address);
 //        VOLT_ERROR("YUJINEE address is %p", address);
   //      VOLT_ERROR("YUJINEE address is %p", oldAddress);

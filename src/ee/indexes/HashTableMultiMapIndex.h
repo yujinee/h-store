@@ -103,7 +103,7 @@ public:
     }
 
     bool setEntryToNewAddress(const TableTuple *tuple, const void* address, const void *oldAddress) {
-      VOLT_ERROR("yujinee : HashTreeMulti");
+ //     VOLT_ERROR("yujinee : HashTreeMulti");
 /*
       VOLT_ERROR("YUJINEE : %d", tuple->getTimeStamp());
 #ifdef ANTICACHE_FREQUENCY
@@ -111,9 +111,9 @@ public:
 #endif
 */
 
-      VOLT_ERROR("YUJINEE : %p", address);
-      VOLT_ERROR("YUJINEE : %p", oldAddress);
-      VOLT_ERROR("YUJINEE : %d", tuple->tupleLength());
+//      VOLT_ERROR("YUJINEE : %p", address);
+//      VOLT_ERROR("YUJINEE : %p", oldAddress);
+//      VOLT_ERROR("YUJINEE : %d", tuple->tupleLength());
 
         m_tmp1.setFromTuple(tuple, column_indices_, m_keySchema);
         ++m_updates;
@@ -141,7 +141,7 @@ public:
         }
 
         VOLT_INFO("Tuple not found."); 
-        VOLT_ERROR(" YUJINEE : Tuple not found."); 
+//        VOLT_ERROR(" YUJINEE : Tuple not found."); 
 
         //key exists, but not this tuple
         //

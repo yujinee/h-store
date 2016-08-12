@@ -101,7 +101,8 @@ for THRESHOLD in 1000 1500; do
             # Anti-Caching Experiments
           "-Dsite.anticache_enable=${ENABLE_ANTICACHE}" \
             "-Dsite.anticache_block_size=${ANTICACHE_BLOCK_SIZE}" \
-            "-Dsite.anticache_dir=../../../media/SSD/anticache/tpcc" \
+#            "-Dsite.anticache_dir=../../../media/SSD/anticache/tpcc" \
+             "-Dsite.anticache_dir=../../../media/yujinee/HDD/anticache/tpcc" \
             "-Dsite.anticache_reset=true" \
             "-Dsite.anticache_check_interval=${INTERVAL}" \
             "-Dsite.anticache_threshold_mb=${THRESHOLD}" \

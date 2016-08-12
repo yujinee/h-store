@@ -111,7 +111,7 @@ public:
     
     bool setEntryToNewAddress(const TableTuple *tuple, const void* address, const void *oldAddress) {
         // set the key from the tuple
-        VOLT_ERROR("yujinee : BTreeUnique");
+        //VOLT_ERROR("yujinee : BTreeUnique");
         m_tmp1.setFromTuple(tuple, column_indices_, m_keySchema);
         ++m_updates; 
         

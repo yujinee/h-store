@@ -118,7 +118,7 @@ public:
     }
     
     bool setEntryToNewAddress(const TableTuple *tuple, const void* address, const void *oldAddress) {
-      VOLT_ERROR("yujinee : BTreeMulti");
+//      VOLT_ERROR("yujinee : BTreeMulti");
         m_tmp1.setFromTuple(tuple, column_indices_, m_keySchema);
         ++m_updates; 
         

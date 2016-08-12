@@ -498,7 +498,7 @@ class TupleKey {
     // Set a key from a table-schema tuple.
     inline void setFromTuple(const TableTuple *tuple, const int *indices, const TupleSchema *keySchema) {
 
-         VOLT_ERROR("YUJINEE : setFromTuple3");
+       //  VOLT_ERROR("YUJINEE : setFromTuple3");
         assert(tuple);
         assert(indices);
         m_columnIndices = indices;
