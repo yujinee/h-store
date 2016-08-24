@@ -92,11 +92,11 @@ namespace voltdb {
 
 #ifdef ANTICACHE
     #ifdef ANTICACHE_TIMESTAMPS
-      #ifdef ANTICACHE_FREQUENCY
-        #define TUPLE_HEADER_SIZE 9
-      #else
+//      #ifdef ANTICACHE_FREQUENCY
+//        #define TUPLE_HEADER_SIZE 9
+//      #else
     	  #define TUPLE_HEADER_SIZE 5
-      #endif
+//      #endif
     #else
       	#ifdef ANTICACHE_REVERSIBLE_LRU
          	#define TUPLE_HEADER_SIZE 9
@@ -335,6 +335,40 @@ public:
     	}
 
 	#else
+    #ifdef ANTICACHE_FREQUENCY
+        /*
+        inline uint32_t getFrequency(){
+          uint32_t freq = 0;
+          memcpy(&freq, m_data+TUPLE_HEADER_SIZE-8, 4);
+          return freq;
+        }
+
+        inline void setFrequency(){
+          uint32_t freq = 0;
+          memcpy(&freq, m_data+TUPLE_HEADER_SIZE-8, 4);
+          freq++;
+          memcpy(m_data+TUPLE_HEADER_SIZE-8, &freq, 4);
+        }
+        */
+     	inline uint32_t getTimeStamp() {
+          uint32_t freq = 0;
+          memcpy(&freq, m_data+TUPLE_HEADER_SIZE-4, 4);
+          return freq;
+    	}
+
+   
+        inline void setTimeStamp() {
+          uint32_t freq = 0;
+          memcpy(&freq, m_data+TUPLE_HEADER_SIZE-4, 4);
+          freq++;
+          memcpy(m_data+TUPLE_HEADER_SIZE-4, &freq, 4);
+        }
+        inline void setColdTimeStamp() {
+            uint32_t cold_time = 0;
+            memcpy(m_data+TUPLE_HEADER_SIZE-4, &cold_time, 4);
+        }
+
+      #else
     	inline uint32_t getTimeStamp() {
         	uint32_t time_stamp = 0;
 	        memcpy(&time_stamp, m_data+TUPLE_HEADER_SIZE-4, 4);
@@ -358,19 +392,6 @@ public:
             memcpy(m_data+TUPLE_HEADER_SIZE-4, &cold_time, 4);
         }
 
-    #ifdef ANTICACHE_FREQUENCY
-        inline uint32_t getFrequency(){
-          uint32_t freq = 0;
-          memcpy(&freq, m_data+TUPLE_HEADER_SIZE-8, 4);
-          return freq;
-        }
-
-        inline void setFrequency(){
-          uint32_t freq = 0;
-          memcpy(&freq, m_data+TUPLE_HEADER_SIZE-8, 4);
-          freq++;
-          memcpy(m_data+TUPLE_HEADER_SIZE-8, &freq, 4);
-        }
     #endif
   #endif
 #endif

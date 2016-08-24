@@ -79,7 +79,7 @@ void EvictionIterator::reserve(int64_t amount) {
     char* addr = NULL;
     PersistentTable* ptable = static_cast<PersistentTable*>(table);
     int tuple_size = ptable->m_schema->tupleLength() + TUPLE_HEADER_SIZE;
-    VOLT_ERROR("yujinee TUPLE_HEADER_SIZE: %d\n", TUPLE_HEADER_SIZE);
+//    VOLT_ERROR("yujinee TUPLE_HEADER_SIZE: %d\n", TUPLE_HEADER_SIZE);
     int active_tuple = (int)ptable->activeTupleCount();
     int evict_num = 0;
     int64_t used_tuple = ptable->usedTupleCount();
@@ -163,11 +163,11 @@ void EvictionIterator::reserve(int64_t amount) {
                 current_tuple->move(addr);
 
                 if (current_tuple->isActive()) {
-                    #ifdef ANTICACHE_FREQUENCY
-                        candidates[m_size].setTuple(current_tuple->getTimeStamp(), current_tuple->getFrequency(), addr);
-                    #else
+//                    #ifdef ANTICACHE_FREQUENCY
+//                      candidates[m_size].setTuple(current_tuple->getTimeStamp(), current_tuple->getFrequency(), addr);
+//                    #else
                         candidates[m_size].setTuple(current_tuple->getTimeStamp(), addr);
-                    #endif
+//                    #endif
                     m_size++;
                 }
 
@@ -191,11 +191,11 @@ void EvictionIterator::reserve(int64_t amount) {
                 if (!current_tuple->isActive() || current_tuple->isEvicted())
                     continue;
 
-                #ifdef ANTICACHE_FREQUENCY
-                    candidates[m_size].setTuple(current_tuple->getTimeStamp(), current_tuple->getFrequency(), current_addr);
-                #else
+//                #ifdef ANTICACHE_FREQUENCY
+//                    candidates[m_size].setTuple(current_tuple->getTimeStamp(), current_tuple->getFrequency(), current_addr);
+//                #else
                     candidates[m_size].setTuple(current_tuple->getTimeStamp(), current_addr);
-                #endif
+//                #endif
                 m_size++;
             }
         }
@@ -218,11 +218,11 @@ void EvictionIterator::reserve(int64_t amount) {
             if (!current_tuple->isActive() || current_tuple->isEvicted())
                 continue;
 
-            #ifdef ANTICACHE_FREQUENCY
-                candidates[m_size].setTuple(current_tuple->getTimeStamp(), current_tuple->getFrequency(), addr);
-            #else
+//            #ifdef ANTICACHE_FREQUENCY
+//                candidates[m_size].setTuple(current_tuple->getTimeStamp(), current_tuple->getFrequency(), addr);
+//            #else
                 candidates[m_size].setTuple(current_tuple->getTimeStamp(), addr);
-            #endif
+//            #endif
             m_size++;
         }
 #endif
@@ -244,11 +244,11 @@ void EvictionIterator::reserve(int64_t amount) {
 
                 VOLT_TRACE("Flip addr: %p\n", addr);
                 
-                #ifdef ANTICACHE_FREQUENCY
-                    candidates[m_size].setTuple(current_tuple->getTimeStamp(), current_tuple->getFrequency(), addr);
-                #else
+//                #ifdef ANTICACHE_FREQUENCY
+//                    candidates[m_size].setTuple(current_tuple->getTimeStamp(), current_tuple->getFrequency(), addr);
+//                #else
                     candidates[m_size].setTuple(current_tuple->getTimeStamp(), addr);
-                #endif
+//                #endif
                 m_size++;
 
                 addr += tuple_size;

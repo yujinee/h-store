@@ -75,6 +75,7 @@ public:
        /* 
         * sorted in ascending order
         */ 
+/*
     #ifdef ANTICACHE_FREQUENCY
         uint32_t m_frequency;  
 
@@ -92,6 +93,7 @@ public:
         }
    
     #else
+*/
         bool operator < (const EvictionTuple &b) const {
             if (b.m_timestamp == m_timestamp)
                 return (long)m_addr < (long)b.m_addr;
@@ -103,7 +105,7 @@ public:
             m_addr = addr;
         }
 
-    #endif
+//   #endif
     };
     
 private: 

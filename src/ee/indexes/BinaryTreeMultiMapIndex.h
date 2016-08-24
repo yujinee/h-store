@@ -143,11 +143,11 @@ public:
         
         VOLT_INFO("Tuple not found.");
         
-        return true; 
+//        return true; 
         
         //key exists, but not this tuple
         // yujinee return true;
-//        return false;
+        return false;
     }
 
     bool checkForIndexChange(const TableTuple *lhs, const TableTuple *rhs)

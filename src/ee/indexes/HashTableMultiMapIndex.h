@@ -146,8 +146,8 @@ public:
         //key exists, but not this tuple
         //
         //yujinee
-        //return false;
-                return true;
+        return false;
+        //        return true;
     }
 
     bool checkForIndexChange(const TableTuple *lhs, const TableTuple *rhs) {
