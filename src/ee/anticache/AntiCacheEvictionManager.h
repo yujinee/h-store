@@ -128,6 +128,10 @@ public:
     unsigned char m_sketch_thresh;
 #endif
 
+#ifdef ANTICACHE_FREQUENCY
+    uint32_t max;
+#endif
+
 protected:
     void initEvictResultTable();
 

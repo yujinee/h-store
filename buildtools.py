@@ -48,7 +48,7 @@ class BuildContext:
         self.ARIES= False
         self.ANTICACHE_COUNTER = False
         self.ANTICACHE_TIMESTAMPS = True
-        self.ANTICACHE_FREQUENCY = False
+        self.ANTICACHE_FREQUENCY = True
         self.ANTICACHE_TIMESTAMPS_PRIME = True
 
         for arg in [x.strip().upper() for x in args]:

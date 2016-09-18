@@ -350,6 +350,7 @@ public:
           memcpy(m_data+TUPLE_HEADER_SIZE-8, &freq, 4);
         }
         */
+
      	inline uint32_t getTimeStamp() {
           uint32_t freq = 0;
           memcpy(&freq, m_data+TUPLE_HEADER_SIZE-4, 4);
@@ -357,15 +358,24 @@ public:
     	}
 
    
-        inline void setTimeStamp() {
+        inline uint32_t setTimeStamp(uint32_t max) {
+          uint32_t freq = 0;
+          memcpy(&freq, m_data+TUPLE_HEADER_SIZE-4, 4);
+          if(freq==0){
+            freq=(max+4)/4;
+          }
+          else{
+            freq++;
+          }
+          memcpy(m_data+TUPLE_HEADER_SIZE-4, &freq, 4);
+          return freq;
+        }
+
+        inline void setColdTimeStamp() {
           uint32_t freq = 0;
           memcpy(&freq, m_data+TUPLE_HEADER_SIZE-4, 4);
           freq++;
           memcpy(m_data+TUPLE_HEADER_SIZE-4, &freq, 4);
-        }
-        inline void setColdTimeStamp() {
-            uint32_t cold_time = 0;
-            memcpy(m_data+TUPLE_HEADER_SIZE-4, &cold_time, 4);
         }
 
       #else

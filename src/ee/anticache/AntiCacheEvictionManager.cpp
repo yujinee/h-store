@@ -91,6 +91,10 @@ AntiCacheEvictionManager::AntiCacheEvictionManager(const VoltDBEngine *engine) {
     m_numdbs = 0;
     m_migrate = false;
 
+#ifdef ANTICACHE_FREQUENCY
+    max=0;
+#endif
+
 #ifdef ANTICACHE_COUNTER
     m_sample.resize(SKETCH_SAMPLE_SIZE, 0);
     m_sketch_thresh = 255 - 255 * SKETCH_THRESH / SKETCH_SAMPLE_SIZE;
@@ -272,10 +276,13 @@ bool AntiCacheEvictionManager::updateTuple(PersistentTable* table, TableTuple* t
 #else
     // set timestamp to the hotest
     TableTuple update_tuple(tuple->address(), table->m_schema);
+//    update_tuple.setTimeStamp();
+#ifdef ANTICACHE_FREQUENCY
+    uint32_t tmp = update_tuple.setTimeStamp(max);
+    if(tmp>max) max=tmp;
+#else
     update_tuple.setTimeStamp();
-//#ifdef ANTICACHE_FREQUENCY
-//    update_tuple.setFrequency();
-//#endif
+#endif
 #endif
         
     return true; 

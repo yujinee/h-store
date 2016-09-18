@@ -31,8 +31,8 @@ BASE_PROJECT="ycsb"
 #BASE_DIR='anti'
 #OUTPUT_DIR="~/data/ycsb/read-heavy/2/80-20"
 
-for skew in 0.8 1.01 1.1 1.2; do
-    for round in 1 2 3; do
+for skew in 0.8 1.01 1.2 1.4; do
+    for round in 1 2; do
         OUTPUT_PREFIX="test/ycsb-T500-NoLoop/$round-ycsb1G-flru-T500-S$skew"
         LOG_PREFIX="logs/test/ycsb-T500-NoLoop/$round-ycsb1G-flru-T500-S$skew"
         echo $OUTPUT_PREFIX

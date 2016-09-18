@@ -77,13 +77,21 @@ public final class TPCCConstants {
         TABLENAME_NEW_ORDER,
         TABLENAME_ORDER_LINE,
     };
-
+/*
+    public static final int FREQUENCY_STOCK_LEVEL = 4; // 4
+    public static final int FREQUENCY_DELIVERY = 4; // 4
+    public static final int FREQUENCY_ORDER_STATUS = 72; // 4
+    public static final int FREQUENCY_PAYMENT = 10; // 43
+    public static final int FREQUENCY_NEW_ORDER = 10; // 45
+*/
     public static final int FREQUENCY_STOCK_LEVEL = 4;
     public static final int FREQUENCY_DELIVERY = 4;
     public static final int FREQUENCY_ORDER_STATUS = 4;
     public static final int FREQUENCY_PAYMENT = 43;
     public static final int FREQUENCY_NEW_ORDER = 45;
-    
+ 
+
+
 //    public static final int FREQUENCY_STOCK_LEVEL = 0;
 //    public static final int FREQUENCY_DELIVERY = 0;
 //    public static final int FREQUENCY_ORDER_STATUS = 0;
